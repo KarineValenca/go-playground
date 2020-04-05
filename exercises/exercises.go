@@ -6,6 +6,8 @@ func main()  {
 	dMap()
 	fPerson()
 	usingVehicles()
+	usingGators()
+	usingSlices()
 }
 
 func slice() {
@@ -121,4 +123,62 @@ func usingVehicles() {
 	fmt.Println(s1.color)
 	report(s1)
 
+}
+
+type gator int
+
+func (g gator) greeting() {
+	fmt.Println("Hello, I'm a gator")
+
+}
+
+type flamingo bool
+
+func (f flamingo) greeting() {
+	fmt.Println("Hello, I am pink and beautiful and wonderful")
+}
+
+type swampCreature interface {
+	greeting()
+}
+
+func bayou(sc swampCreature) {
+	sc.greeting()
+}
+
+func usingGators() {
+	var g1 gator
+
+	g1 = 3
+
+	fmt.Println(g1)
+	fmt.Printf("%T\n", g1)
+
+	var x int
+	fmt.Println(x)
+	fmt.Printf("%T\n", x)
+
+	x = int(g1)
+	fmt.Println(x)
+
+	g1.greeting()
+	bayou(g1)
+
+	var f1 flamingo
+	bayou(f1)
+	
+}
+
+func usingSlices() {
+	s := "I'm sorry dave I can't do that"
+	fmt.Println(s)
+	fmt.Println([]byte(s))
+	fmt.Println(string([]byte(s)))
+	fmt.Println(string([]byte(s)[:14]))
+	fmt.Println(string([]byte(s)[10:22]))
+	fmt.Println(string([]byte(s)[17:]))
+
+	for _, v := range s{
+		fmt.Println(string(v))
+	}
 }
