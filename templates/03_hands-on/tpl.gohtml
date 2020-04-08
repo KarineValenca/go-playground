@@ -8,12 +8,13 @@
 <body>
 
 {{range .}}
-    
-    {{.Meal}}
-    {{range .Items}}
-        {{.Name}} - {{.Description}} ${{.Price}}
+    {{.Name}}
+    {{range .Menu}}
+        {{.Meal}}
+        {{range .Items}}
+            {{.Name}} - {{.Description}} ${{.Price}}
+        {{end}}
     {{end}}
-    
 {{end}}
 
 </body>
