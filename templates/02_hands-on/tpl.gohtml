@@ -8,9 +8,11 @@
 <body>
 
 {{range .}}
-    {{.Name}}
     {{.Region}}
-    {{.Address}} {{.City}} {{.Zip}}
+    {{range .Hotels}}
+        {{.Name}}
+        {{.Address}} - {{.City}} - {{.Zip}}
+    {{end}}
 {{end}}
 </body>
 </html>
