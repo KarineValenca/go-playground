@@ -4,29 +4,53 @@ import (
 	"fmt"
 )
 
-func main () {
+var m map[string]string
+
 	
 	
-	str := "{}"
+func main() {
+
+	m = make(map[string]string)
+	m["("] = ")"
+	m["["] = "]"
+	m["{"] = "}"
 	
-	isValid := isValidString(str)
-	fmt.Println(isValid)
+	str := "{}()[]"
+	fmt.Println(isValidString(str))
 	
 }
-func isValidString(str string) bool {
-	switch {
-		case str[0] == 40 && str[1] == 41:
-			fmt.Println("Valid string")
-			return true
-		case str[0] == 91 && str[1] == 93:
-			fmt.Println("Valid string")
-			return true
-		case str[0] == 123 && str[1] == 125:
-			fmt.Println("Valid string")
-			return true
-		default:
-			fmt.Println("Invalid string")
-			return false
-	}
 
+func isValidString (str string) bool {
+	var auxArr []string
+	
+	
+	for i := 0; i < len(str); i++ {
+		if str[i] == 40 || str[i] == 91 || str[i] == 123 { //40 == ( | 91 == [ | 123 == {
+			auxArr = append(auxArr , string(str[i]))
+		} else {
+			if m[string(auxArr[len(auxArr)-1])] == string(str[i]) {
+				auxArr = remove(auxArr)
+			} else {
+				fmt.Println("Invalid string")
+				return false
+			}
+			
+		}
+	}
+	
+	if len(auxArr) == 0 {
+		fmt.Println("Valid string")
+		return true
+	} else {
+		fmt.Println("Invalid string")
+		return false
+	}
+}
+
+func remove (a []string) []string {
+	i := len(a)-1 //remove last element
+	copy(a[i:], a[i+1:]) // Shift a[i+1:] left one index.
+	a[len(a)-1] = ""     // Erase last element (write zero value).
+	a = a[:len(a)-1]     // Truncate slice.
+	return a
 }
