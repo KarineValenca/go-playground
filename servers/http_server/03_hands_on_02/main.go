@@ -43,5 +43,7 @@ func serve (conn net.Conn) {
 	fmt.Fprintf(conn, "Content-Length: %d\r\n", len(body))
 
 	fmt.Fprint(conn, "Content-Type: text/plain\r\n")
+	io.WriteString(conn, "\r\n")
+	io.WriteString(conn, body)
 }
 
