@@ -8,10 +8,12 @@
 
 {{if .First}}
     USERNAME {{.UserName}} <br>
+    PASSWORD {{.Password}}
     FIRST {{.First}} <br>
     LAST {{.Last}} <br>
 {{else}}
     <h2><a href="/signup">sign up</a></h2>
+    <h2><a href="/login">log in</a></h2>
 {{end}}
 
 <br>
