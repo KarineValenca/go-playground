@@ -13,7 +13,7 @@ var err error
 
 func main() {
 	// TODO Fix localhost
-	db, err = sql.Open("mysql", "localhost:3760")
+	db, err = sql.Open("mysql", "root:root@tcp(localhost:3306)/test02")
 	check(err)
 	defer db.Close()
 
@@ -22,8 +22,9 @@ func main() {
 
 	http.HandleFunc("/", index)
 	http.HandleFunc("/amigos", amigos)
-	http.HandleFunc("/crate", create)
+	http.HandleFunc("/create", create)
 	http.HandleFunc("/insert", insert)
+	http.HandleFunc("/update", update)
 	http.HandleFunc("/read", read)
 	http.HandleFunc("/delete", delete)
 	http.HandleFunc("/drop", drop)
@@ -39,7 +40,7 @@ func index(w http.ResponseWriter, req *http.Request) {
 }
 
 func amigos(w http.ResponseWriter, req *http.Request) {
-	rows, err := db.Query(`SELECT aName FROM amigos;`)
+	rows, err := db.Query(`SELECT name FROM amigos;`)
 	check(err)
 	defer rows.Close()
 
@@ -112,7 +113,7 @@ func update(w http.ResponseWriter, req *http.Request) {
 }
 
 func delete(w http.ResponseWriter, req *http.Request) {
-	stmt, err := db.Prepare(`DELETE FROM customer WHERE name="Jimmy;`)
+	stmt, err := db.Prepare(`DELETE FROM customer WHERE name="Jimmy";`)
 	check(err)
 	defer stmt.Close()
 	
