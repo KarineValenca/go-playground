@@ -9,7 +9,7 @@ import (
 	"crypto/sha1"
 	"io"
 	"os"
-	"filepath"
+	"path/filepath"
 )
 
 var tpl *template.Template
@@ -46,7 +46,17 @@ func index(w http.ResponseWriter, req *http.Request) {
 			fmt.Println(err)
 		}
 		path := filepath.Join(wd, "public", "pics", fileName)
-		//TODO CONTINUOUS HERE
+		nf, err := os.Create(path)
+		if err != nil {
+			fmt.Println(err)
+		}
+		defer nf.Close()
+
+		//copy
+		mf.Seek(0,0)
+		io.Copy(nf, mf)
+		cookie = appendValue(w, cookie, fileName)
+
 	}
 
 	xs := strings.Split(cookie.Value, "|")
@@ -68,27 +78,13 @@ func getCookie(w http.ResponseWriter, req *http.Request) *http.Cookie{
 	return cookie
 }
 
-func saveImages(w http.ResponseWriter, c *http.Cookie) *http.Cookie{
-	p1 := "disnayland.jpg"
-	p2 := "atbeach.jpg"
-	p3 := "hollywood.jpg"
+func appendValue(w http.ResponseWriter, c *http.Cookie, fname string) *http.Cookie {
+		s := c.Value
+		if !strings.Contains(s, fname) {
+			s += "|" + fname
+		}
 
-	s := c.Value
-
-	if !strings.Contains(s, p1) {
-		s += "|" + p1
-	}
-
-	if !strings.Contains(s, p2) {
-		s += "|" + p2
-	}
-
-	if !strings.Contains(s, p3) {
-		s += "|" + p3
-	}
-
-	c.Value = s
-	http.SetCookie(w, c)
-	
-	return c
+		c.Value = s
+		http.SetCookie(w, c)
+		return c
 }
