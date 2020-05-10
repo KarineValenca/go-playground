@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let httpStatusCode = [
+            {
+                "Code": "StatusOK",
+                "Descrip": 200,
+            },
+            {
+                "Code": "StatusMovedPermanently",
+                "Descrip": 301,
+            },
+            {
+                "Code": "StatusFound",
+                "Descrip": 303,
+            },
+            {
+                "Code": "StatusSeeOther",
+                "Descrip": 307,
+            },
+        ]
+    var transmit = JSON.stringify(httpStatusCode)
+    document.write(transmit)
+    </script>
+</body>
+</html>
